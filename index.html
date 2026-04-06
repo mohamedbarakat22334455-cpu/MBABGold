@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MB GOLD | ULTIMATE EDITION</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="toast-container"></div>
+
+    <section id="entry-page" class="active-screen">
+        <div class="glass-card auth-card pulse-gold">
+            <h1 class="neon-logo">MB<span>GOLD</span></h1>
+            <p class="subtitle">منصة محمد بركات - الإصدار الكامل</p>
+            <button class="main-btn" onclick="app.setMode('user')">دخول الطلاب والأعضاء</button>
+            <button class="main-btn secondary" onclick="app.setMode('admin')">لوحة المدير (محمد بركات) 👑</button>
+        </div>
+    </section>
+
+    <section id="auth-page" style="display:none;">
+        <div class="glass-card auth-card">
+            <h2 id="auth-title" class="gold-text">تسجيل دخول</h2>
+            <div class="avatar-wrapper">
+                <input type="file" id="user-avatar-input" accept="image/*" onchange="app.handleAvatar(this)">
+                <img id="avatar-preview" src="https://via.placeholder.com/100" alt="Avatar">
+                <div class="plus">+</div>
+            </div>
+            <input type="text" id="reg-name" placeholder="الاسم الثلاثي">
+            <input type="tel" id="reg-phone" placeholder="رقم الموبايل">
+            <div id="admin-pass-container" style="display:none;">
+                <input type="password" id="admin-code" placeholder="ادخل الرمز السري">
+            </div>
+            <button class="main-btn" onclick="app.login()">تأكيد الدخول 🚀</button>
+            <button class="main-btn secondary" onclick="location.reload()">رجوع</button>
+        </div>
+    </section>
+
+    <main id="app-main" style="display:none;">
+        <header class="glass-header">
+            <h2 class="neon-logo">MB<span>GOLD</span></h2>
+            <div id="user-badge" class="badge"></div>
+        </header>
+
+        <div id="home-screen" class="page">
+            <div id="feed-items"></div>
+        </div>
+
+        <div id="chat-screen" class="page" style="display:none;">
+            <div class="chat-container glass-card">
+                <div id="chat-messages"></div>
+                <div class="chat-input-row">
+                    <input type="text" id="chat-input" placeholder="اكتب رسالتك...">
+                    <button class="send-btn" onclick="app.sendChatMessage()">⚡</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="post-screen" class="page" style="display:none;">
+            <div class="glass-card">
+                <h3 class="gold-text">نشر محتوى جديد</h3>
+                <textarea id="p-text" placeholder="اكتب موضوعك هنا..."></textarea>
+                <div class="upload-zone">
+                    <input type="file" id="p-file" accept="image/*,video/*" onchange="app.handleFile(this)">
+                    <div id="file-status">🎥 ارفع صورة أو فيديو حقيقي</div>
+                </div>
+                <div id="preview-container"></div>
+                <button class="main-btn" onclick="app.createPost()">نشر في المنصة</button>
+            </div>
+        </div>
+
+        <div id="sub-screen" class="page" style="display:none;">
+            <div class="glass-card">
+                <h3 class="gold-text">خزينة الاشتراكات 💰</h3>
+                <div id="admin-sub-tools" style="display:none;">
+                    <select id="sub-teacher-select" class="styled-input"></select>
+                    <input type="number" id="sub-amount" class="styled-input" placeholder="المبلغ بالجنيه">
+                    <input type="text" id="sub-note" class="styled-input" placeholder="سبب الدفع (مثال: حصة الكيمياء)">
+                    <button class="main-btn" onclick="app.addSubscription()">تسجيل المبلغ</button>
+                </div>
+                <div id="sub-list" style="margin-top:20px;"></div>
+            </div>
+        </div>
+
+        <div id="admin-screen" class="page" style="display:none;">
+            <div class="admin-stats">
+                <div class="stat-box">👥 <span id="stat-u">0</span> مستخدم</div>
+                <div class="stat-box">📝 <span id="stat-p">0</span> بوست</div>
+            </div>
+            <h3 class="gold-text" style="margin-top:20px;">التحكم في المستخدمين</h3>
+            <div id="admin-user-list"></div>
+        </div>
+
+        <div id="profile-screen" class="page" style="display:none;">
+            <div class="glass-card text-center">
+                <img id="my-prof-img" src="" class="profile-big-img">
+                <h2 id="prof-name"></h2>
+                <div id="prof-role-badge" class="badge"></div>
+                <div class="profile-btns" style="margin-top:20px;">
+                    <button class="main-btn wa-btn" onclick="app.inviteWhatsApp()">🟢 دعوة صديق للبرنامج</button>
+                    <button class="main-btn logout-btn" style="background:#ff4444; color:#fff;" onclick="location.reload()">تسجيل خروج</button>
+                </div>
+            </div>
+        </div>
+
+        <nav class="glass-nav">
+            <div class="nav-item active" onclick="app.nav('home')">🏠<span>الرئيسية</span></div>
+            <div class="nav-item" onclick="app.nav('chat')">💬<span>الشات</span></div>
+            <div class="nav-item" onclick="app.nav('post')">➕<span>نشر</span></div>
+            <div id="sub-nav" class="nav-item" style="display:none;" onclick="app.nav('sub')">💰<span>المالية</span></div>
+            <div id="admin-nav" class="nav-item" style="display:none;" onclick="app.nav('admin')">⚙️<span>الإدارة</span></div>
+            <div class="nav-item" onclick="app.nav('profile')">👤<span>حسابي</span></div>
+        </nav>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
